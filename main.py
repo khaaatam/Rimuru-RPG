@@ -64,7 +64,7 @@ async def change_status():
 @bot.event
 async def on_ready():
     print("====================================")
-    print(f"Bot {bot.user} (prefix: {bot.command_prefix[0]}) telah online!")
+    print(f"Bot {bot.user} (prefix: {bot.command_prefix}) telah online!")
     print("====================================")
     # Memastikan bot siap sebelum memulai task
     await bot.wait_until_ready()

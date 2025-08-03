@@ -106,24 +106,43 @@ class LogicHandler:
     def _profil_logic(self, user_id, user_name, user_avatar_url):
         user_id_str = str(user_id)
         if user_id_str not in self.players: return None
+
         player_data = self.players[user_id_str]
         required_xp = self.calculate_xp_for_level(player_data['level'])
         total_stats = self._get_player_total_stats(user_id_str)
+        
         embed = discord.Embed(title=f"Profil: {user_name}", color=discord.Color.from_str("#FADA5E"))
         embed.set_thumbnail(url=user_avatar_url)
+        
+        # Info Dasar
         embed.add_field(name="🌟 Level", value=player_data['level'], inline=True)
         embed.add_field(name="✨ XP", value=f"{player_data['xp']}/{required_xp}", inline=True)
         embed.add_field(name="💰 Gold", value=player_data['gold'], inline=True)
+        
+        # Atribut Pertarungan
         embed.add_field(name="❤️ HP", value=f"{player_data['hp']}/{player_data.get('max_hp', 100)}", inline=True)
         embed.add_field(name="⚔️ Attack", value=total_stats['attack'], inline=True)
         embed.add_field(name="🛡️ Defense", value=total_stats['defense'], inline=True)
-        embed.add_field(name=f"Dungeon {player_data['dungeon_progress']['current_dungeon']}", value=f"Monsters Defeated: {player_data['dungeon_progress']['monsters_defeated']}", inline=True)
+
+        # Perlengkapan
         equipment = player_data.get('equipment', {})
         senjata_id = equipment.get('senjata')
         armor_id = equipment.get('armor')
         senjata_nama = self.SHOP_ITEMS.get(senjata_id, {}).get('nama_tampilan', 'Kosong') if senjata_id else 'Kosong'
         armor_nama = self.SHOP_ITEMS.get(armor_id, {}).get('nama_tampilan', 'Kosong') if armor_id else 'Kosong'
         embed.add_field(name="`Perlengkapan Terpasang`", value=f"🗡️ **Senjata**: {senjata_nama}\n🛡️ **Armor**: {armor_nama}", inline=False)
+
+        # --- BAGIAN YANG DIPERBAIKI ---
+        # Menampilkan progres dungeon tertinggi yang sudah dibuka
+        dungeon_progress = player_data.get('dungeon_progress', {})
+        unlocked_dungeon_id = str(dungeon_progress.get('unlocked', 1))
+        dungeon_info = self.DUNGEONS.get(unlocked_dungeon_id)
+        
+        if dungeon_info:
+            dungeon_nama = dungeon_info.get('nama', f'Dungeon {unlocked_dungeon_id}')
+            embed.add_field(name="🗺️ Progres Dungeon", value=f"Tertinggi: **{dungeon_nama}**", inline=False)
+        # ---------------------------
+        
         embed.set_footer(text=f"ID Pemain: {user_id_str}")
         return embed
 
