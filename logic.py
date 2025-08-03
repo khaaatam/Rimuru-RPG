@@ -4,7 +4,7 @@ import random
 from datetime import datetime, timedelta
 import discord
 
-DB_FILE = "database.json"
+DB_FILE = "/data/database.json"
 
 class LogicHandler:
     def __init__(self):
