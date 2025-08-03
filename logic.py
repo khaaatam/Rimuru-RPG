@@ -80,12 +80,7 @@ class LogicHandler:
                     "armor": None
                 },
                 "inventory": {}, 
-                "dungeon_progress": {
-                    "current_dungeon": 1,
-                    "monsters_defeated": 0,
-                    "boss_unlocked": False,
-                    "cooldown_until": "2000-01-01T00:00:00"
-                },
+                "dungeon_progress": {"unlocked": 1, "cooldown_until": "2000-01-01T00:00:00"},
                 "hunt_cooldown_until": "2000-01-01T00:00:00",
                 "jelajah_cooldown_until": "2000-01-01T00:00:00",
                 "active_quest": {

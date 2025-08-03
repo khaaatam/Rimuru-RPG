@@ -13,9 +13,7 @@
     },
     "inventory": {},
     "dungeon_progress": {
-      "current_dungeon": 1,
-      "monsters_defeated": 0,
-      "boss_unlocked": false,
+      "unlocked": 1,
       "cooldown_until": "2000-01-01T00:00:00"
     },
     "hunt_cooldown_until": "2000-01-01T00:00:00",
