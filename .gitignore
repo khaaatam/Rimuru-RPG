@@ -1,0 +1,9 @@
+# Abaikan folder virtual environment
+venv/
+
+# Abaikan file .env yang berisi token rahasia
+.env
+
+# Abaikan cache Python
+__pycache__/
+*.pyc

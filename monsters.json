@@ -1,0 +1,81 @@
+{
+  "zona": {
+    "hutan": {
+      "nama_tampilan": "Hutan Pemula",
+      "level_rekomendasi": 1,
+      "monster_list": ["slime", "goblin", "serigala"]
+    },
+    "gua": {
+      "nama_tampilan": "Gua Gelap",
+      "level_rekomendasi": 5,
+      "monster_list": ["goblin", "orc", "kelelawar_gua"]
+    },
+    "pegunungan": {
+      "nama_tampilan": "Pegunungan Batu",
+      "level_rekomendasi": 10,
+      "monster_list": ["orc", "golem_batu"]
+    }
+  },
+  "monster_data": {
+    "slime": {
+      "nama": "Slime",
+      "emoji": "🦠",
+      "hp": 30,
+      "attack": 5,
+      "defense": 2,
+      "hadiah_gold": [5, 15],
+      "hadiah_xp": [10, 20],
+      "drops": { "slime_gel": 0.75 }
+    },
+    "goblin": {
+      "nama": "Goblin",
+      "emoji": "👺",
+      "hp": 50,
+      "attack": 8,
+      "defense": 4,
+      "hadiah_gold": [15, 30],
+      "hadiah_xp": [25, 40],
+      "drops": { "telinga_goblin": 0.5 }
+    },
+    "orc": {
+      "nama": "Orc",
+      "emoji": "👹",
+      "hp": 80,
+      "attack": 12,
+      "defense": 6,
+      "hadiah_gold": [30, 50],
+      "hadiah_xp": [50, 75],
+      "drops": { "kulit_orc": 0.25 }
+    },
+    "serigala": {
+      "nama": "Serigala Hutan",
+      "emoji": "🐺",
+      "hp": 40,
+      "attack": 10,
+      "defense": 3,
+      "hadiah_gold": [10, 25],
+      "hadiah_xp": [20, 35],
+      "drops": { "taring_serigala": 0.5 }
+    },
+    "golem_batu": {
+      "nama": "Golem Batu",
+      "emoji": "🗿",
+      "hp": 120,
+      "attack": 8,
+      "defense": 10,
+      "hadiah_gold": [50, 80],
+      "hadiah_xp": [80, 110],
+      "drops": { "pecahan_batu": 0.9 }
+    },
+    "kelelawar_gua": {
+      "nama": "Kelelawar Gua",
+      "emoji": "🦇",
+      "hp": 20,
+      "attack": 6,
+      "defense": 1,
+      "hadiah_gold": [3, 10],
+      "hadiah_xp": [5, 15],
+      "drops": { "sayap_kelelawar": 0.6 }
+    }
+  }
+}

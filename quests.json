@@ -1,0 +1,42 @@
+{
+  "1": {
+    "nama": "Pemburu Slime I",
+    "deskripsi": "Kalahkan 5 ekor Slime.",
+    "target_monster": "slime",
+    "jumlah_target": 5,
+    "hadiah_gold": 200,
+    "hadiah_xp": 300
+  },
+  "2": {
+    "nama": "Pemusnah Goblin I",
+    "deskripsi": "Kalahkan 3 ekor Goblin.",
+    "target_monster": "goblin",
+    "jumlah_target": 3,
+    "hadiah_gold": 250,
+    "hadiah_xp": 400
+  },
+  "3": {
+    "nama": "Pemburu Serigala I",
+    "deskripsi": "Kalahkan 5 ekor Serigala Hutan.",
+    "target_monster": "serigala",
+    "jumlah_target": 5,
+    "hadiah_gold": 300,
+    "hadiah_xp": 450
+  },
+  "4": {
+    "nama": "Pengendali Kelelawar",
+    "deskripsi": "Kalahkan 10 Kelelawar Gua.",
+    "target_monster": "kelelawar_gua",
+    "jumlah_target": 10,
+    "hadiah_gold": 150,
+    "hadiah_xp": 200
+  },
+  "5": {
+    "nama": "Penghancur Batu",
+    "deskripsi": "Kalahkan 3 Golem Batu.",
+    "target_monster": "golem_batu",
+    "jumlah_target": 3,
+    "hadiah_gold": 500,
+    "hadiah_xp": 700
+  }
+}

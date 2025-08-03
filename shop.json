@@ -1,0 +1,36 @@
+{
+  "jikaels_sword": {
+    "nama_tampilan": "JikaeL's Sword",
+    "harga": 9999999,
+    "deskripsi": "Holy sword that can kill anything.",
+    "emoji": "🗡️",
+    "tipe": "senjata",
+    "efek": { "attack": 132 }
+  },
+  "jikaels_armor": {
+    "nama_tampilan": "JikaeL's Armor",
+    "harga": 9999999,
+    "deskripsi": "Holy armor that can protect anything.",
+    "emoji": "🛡️",
+    "tipe": "armor",
+    "efek": { "defense": 132 }
+  },
+  "ramuan": {
+    "nama_tampilan": "Ramuan Kesehatan",
+    "harga": 25,
+    "deskripsi": "Memulihkan 50 HP.",
+    "emoji": "🧪",
+    "tipe": "konsumsi",
+    "efek": { "hp": 50 }
+  },
+  "pedang_pemula": {
+    "nama_tampilan": "Pedang Pemula",
+    "harga": 100,
+    "deskripsi": "Menambah 3 Attack.",
+    "emoji": "🗡️",
+    "tipe": "senjata",
+    "efek": {
+      "attack": 3
+    }
+  }
+}
