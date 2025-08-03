@@ -12,7 +12,8 @@ class LogicHandler:
         self.SHOP_ITEMS = self.load_data_file("shop.json")
         self.MONSTERS = self.load_data_file("monsters.json")
         self.QUESTS = self.load_data_file("quests.json")
-        print("Data pemain, toko, monster, dan quest berhasil dimuat.")
+        self.DUNGEONS = self.load_data_file("dungeons.json")
+        print("Data pemain, toko, monster, dungeon dan quest berhasil dimuat.")
 
     def load_data_file(self, filename):
         if os.path.exists(filename):
@@ -34,12 +35,40 @@ class LogicHandler:
         if user_id_str in self.players:
             return "Anda sudah memiliki karakter!"
         else:
+            # Ini adalah data lengkap untuk pemain baru
             self.players[user_id_str] = {
-                "level": 1, "xp": 0, "gold": 10, "hp": 100, "max_hp": 100,
-                "attack": 5, "defense": 2,
-                "equipment": {"senjata": None, "armor": None},
-                "last_daily": "2000-01-01 00:00:00.000000", "inventory": {},
-                "active_quest": { "id": None, "progress": 0 }
+                # Atribut Dasar
+                "level": 1,
+                "xp": 0,
+                "gold": 10,
+                "hp": 100,
+                "max_hp": 100,
+                
+                # Atribut Pertarungan
+                "attack": 5,
+                "defense": 2,
+                
+                # Perlengkapan Awal
+                "equipment": {
+                    "senjata": None,
+                    "armor": None
+                },
+                "inventory": {},
+
+                # Progres Dungeon Awal
+                "dungeon_progress": {
+                    "current_dungeon": 1,
+                    "monsters_defeated": 0,
+                    "boss_unlocked": False,
+                    "cooldown_until": "2000-01-01T00:00:00"
+                },
+
+                # Data Lain
+                "active_quest": {
+                    "id": None,
+                    "progress": 0
+                },
+                "last_daily": "2000-01-01T00:00:00.000000"
             }
             self.save_player_data()
             return "Selamat datang di dunia petualangan!"
@@ -421,3 +450,59 @@ class LogicHandler:
             inline=False
             )
         return embed
+    
+    def _dungeon_logic(self, user_id):
+            user_id_str = str(user_id)
+            player_data = self.players[user_id_str]
+            dungeon_progress = player_data['dungeon_progress']
+            
+            # 1. Cek Cooldown
+            cooldown_until = datetime.fromisoformat(dungeon_progress['cooldown_until'])
+            if datetime.now() < cooldown_until:
+                sisa_waktu = cooldown_until - datetime.now()
+                menit, detik = divmod(int(sisa_waktu.total_seconds()), 60)
+                return f"Anda sedang dalam masa cooldown! Coba lagi dalam **{menit} menit {detik} detik**."
+
+            # 2. Tentukan Dungeon yang akan dihadapi
+            dungeon_id = str(dungeon_progress['unlocked'])
+            if dungeon_id not in self.DUNGEONS:
+                return "Selamat! Anda telah menyelesaikan semua dungeon yang tersedia."
+
+            dungeon_info = self.DUNGEONS[dungeon_id]
+            monster = self.MONSTERS['monster_data'][dungeon_info['monster_id']].copy()
+
+            # 3. Persiapan Pertarungan
+            player_stats = self._get_player_total_stats(user_id_str)
+            player_hp = player_data['hp']
+            log = [f"Anda memasuki **{dungeon_info['nama']}** {dungeon_info['emoji']} dan menghadapi **{monster['nama']}**!"]
+
+            # 4. Simulasi & Hasil (Mirip hunting tapi lebih sulit)
+            damage_ke_monster = max(1, player_stats['attack'] - monster['defense'])
+            damage_ke_pemain = max(1, monster['attack'] - player_stats['defense'])
+            
+            ronde_pemain_menang = monster['hp'] / damage_ke_monster
+            ronde_monster_menang = player_hp / damage_ke_pemain
+
+            if ronde_pemain_menang <= ronde_monster_menang:
+                # Pemain Menang
+                hadiah_gold = dungeon_info['hadiah_gold']
+                hadiah_xp = dungeon_info['hadiah_xp']
+                player_data['gold'] += hadiah_gold
+                player_data['xp'] += hadiah_xp
+                log.append(f"\n**KEMENANGAN!**\nAnda berhasil menyelesaikan dungeon dan mendapatkan **{hadiah_gold} Gold** serta **{hadiah_xp} XP**.")
+
+                # Buka dungeon selanjutnya
+                dungeon_progress['unlocked'] += 1
+                # Set cooldown baru
+                cooldown_baru = datetime.now() + timedelta(minutes=dungeon_info['cooldown_menit'])
+                dungeon_progress['cooldown_until'] = cooldown_baru.isoformat()
+                
+                leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
+                if leveled_up: log.append(pesan_level_up)
+            else:
+                # Pemain Kalah
+                player_data['hp'] = 0
+                log.append("\n**KEKALAHAN!** Anda gagal menyelesaikan dungeon. HP Anda menjadi 0.")
+
+            self.save_player_data()
+            return "\n".join(log)

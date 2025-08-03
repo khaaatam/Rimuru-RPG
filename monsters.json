@@ -1,21 +1,4 @@
 {
-  "zona": {
-    "hutan": {
-      "nama_tampilan": "Hutan Pemula",
-      "level_rekomendasi": 1,
-      "monster_list": ["slime", "goblin", "serigala"]
-    },
-    "gua": {
-      "nama_tampilan": "Gua Gelap",
-      "level_rekomendasi": 5,
-      "monster_list": ["goblin", "orc", "kelelawar_gua"]
-    },
-    "pegunungan": {
-      "nama_tampilan": "Pegunungan Batu",
-      "level_rekomendasi": 10,
-      "monster_list": ["orc", "golem_batu"]
-    }
-  },
   "monster_data": {
     "slime": {
       "nama": "Slime",
@@ -25,57 +8,397 @@
       "defense": 2,
       "hadiah_gold": [5, 15],
       "hadiah_xp": [10, 20],
-      "drops": { "slime_gel": 0.75 }
+      "drops": { "slime_gel": 0.5 }
     },
-    "goblin": {
-      "nama": "Goblin",
-      "emoji": "👺",
-      "hp": 50,
-      "attack": 8,
-      "defense": 4,
-      "hadiah_gold": [15, 30],
-      "hadiah_xp": [25, 40],
-      "drops": { "telinga_goblin": 0.5 }
+    "bat": {
+      "nama": "Kelelawar",
+      "emoji": "🦇",
+      "hp": 25,
+      "attack": 7,
+      "defense": 1,
+      "hadiah_gold": [3, 12],
+      "hadiah_xp": [8, 18],
+      "drops": { "bat_wing": 0.4 }
     },
-    "orc": {
-      "nama": "Orc",
-      "emoji": "👹",
-      "hp": 80,
-      "attack": 12,
-      "defense": 6,
-      "hadiah_gold": [30, 50],
-      "hadiah_xp": [50, 75],
-      "drops": { "kulit_orc": 0.25 }
-    },
-    "serigala": {
-      "nama": "Serigala Hutan",
+    "wolf": {
+      "nama": "Serigala",
       "emoji": "🐺",
       "hp": 40,
       "attack": 10,
       "defense": 3,
-      "hadiah_gold": [10, 25],
-      "hadiah_xp": [20, 35],
-      "drops": { "taring_serigala": 0.5 }
+      "hadiah_gold": [10, 20],
+      "hadiah_xp": [15, 25],
+      "drops": { "wolf_fang": 0.3 }
     },
-    "golem_batu": {
-      "nama": "Golem Batu",
-      "emoji": "🗿",
-      "hp": 120,
-      "attack": 8,
+    "goblin_scout": {
+      "nama": "Pramuka Goblin",
+      "emoji": "👺",
+      "hp": 50,
+      "attack": 12,
+      "defense": 4,
+      "hadiah_gold": [15, 25],
+      "hadiah_xp": [20, 30],
+      "drops": { "goblin_ear": 0.5 }
+    },
+    "giant_rat": {
+      "nama": "Tikus Raksasa",
+      "emoji": "🐀",
+      "hp": 45,
+      "attack": 9,
+      "defense": 5,
+      "hadiah_gold": [12, 22],
+      "hadiah_xp": [18, 28],
+      "drops": { "rat_tail": 0.6 }
+    },
+    "cave_spider": {
+      "nama": "Laba-laba Gua",
+      "emoji": "🕷️",
+      "hp": 60,
+      "attack": 14,
+      "defense": 3,
+      "hadiah_gold": [20, 30],
+      "hadiah_xp": [25, 35],
+      "drops": { "spider_silk": 0.4 }
+    },
+    "skeleton_archer": {
+      "nama": "Pemanah Tengkorak",
+      "emoji": "💀",
+      "hp": 70,
+      "attack": 18,
+      "defense": 5,
+      "hadiah_gold": [25, 40],
+      "hadiah_xp": [35, 50],
+      "drops": { "bone_arrow": 0.5 }
+    },
+    "zombie": {
+      "nama": "Zombie",
+      "emoji": "🧟",
+      "hp": 100,
+      "attack": 15,
+      "defense": 8,
+      "hadiah_gold": [30, 45],
+      "hadiah_xp": [40, 60],
+      "drops": { "rotten_flesh": 0.7 }
+    },
+    "ghost": {
+      "nama": "Hantu",
+      "emoji": "👻",
+      "hp": 60,
+      "attack": 20,
       "defense": 10,
-      "hadiah_gold": [50, 80],
-      "hadiah_xp": [80, 110],
-      "drops": { "pecahan_batu": 0.9 }
+      "hadiah_gold": [35, 50],
+      "hadiah_xp": [50, 70],
+      "drops": { "ectoplasm": 0.3 }
     },
-    "kelelawar_gua": {
-      "nama": "Kelelawar Gua",
-      "emoji": "🦇",
-      "hp": 20,
-      "attack": 6,
-      "defense": 1,
-      "hadiah_gold": [3, 10],
-      "hadiah_xp": [5, 15],
-      "drops": { "sayap_kelelawar": 0.6 }
+    "orc_warrior": {
+      "nama": "Prajurit Orc",
+      "emoji": "👹",
+      "hp": 150,
+      "attack": 25,
+      "defense": 12,
+      "hadiah_gold": [50, 75],
+      "hadiah_xp": [80, 110],
+      "drops": { "orc_tusk": 0.4 }
+    },
+    "orc_shaman": {
+      "nama": "Dukun Orc",
+      "emoji": "🧙",
+      "hp": 120,
+      "attack": 30,
+      "defense": 8,
+      "hadiah_gold": [60, 80],
+      "hadiah_xp": [90, 120],
+      "drops": { "shaman_staff": 0.2 }
+    },
+    "war_hound": {
+      "nama": "Anjing Perang",
+      "emoji": "🐕",
+      "hp": 130,
+      "attack": 28,
+      "defense": 10,
+      "hadiah_gold": [40, 60],
+      "hadiah_xp": [70, 100],
+      "drops": { "armored_pelt": 0.3 }
+    },
+    "swamp_thing": {
+      "nama": "Monster Rawa",
+      "emoji": "🌱",
+      "hp": 200,
+      "attack": 35,
+      "defense": 15,
+      "hadiah_gold": [80, 120],
+      "hadiah_xp": [150, 200],
+      "drops": { "mossy_heart": 0.4 }
+    },
+    "giant_leech": {
+      "nama": "Lintah Raksasa",
+      "emoji": "🩸",
+      "hp": 180,
+      "attack": 30,
+      "defense": 20,
+      "hadiah_gold": [70, 110],
+      "hadiah_xp": [140, 190],
+      "drops": { "bloated_sac": 0.5 }
+    },
+    "lizardman": {
+      "nama": "Manusia Kadal",
+      "emoji": "🦎",
+      "hp": 220,
+      "attack": 40,
+      "defense": 18,
+      "hadiah_gold": [90, 130],
+      "hadiah_xp": [160, 220],
+      "drops": { "lizard_scale": 0.3 }
+    },
+    "fire_elemental": {
+      "nama": "Elemental Api",
+      "emoji": "🔥",
+      "hp": 250,
+      "attack": 50,
+      "defense": 20,
+      "hadiah_gold": [120, 180],
+      "hadiah_xp": [250, 350],
+      "drops": { "fire_core": 0.4 }
+    },
+    "magma_slime": {
+      "nama": "Slime Magma",
+      "emoji": "☄️",
+      "hp": 300,
+      "attack": 40,
+      "defense": 25,
+      "hadiah_gold": [110, 170],
+      "hadiah_xp": [240, 340],
+      "drops": { "magma_stone": 0.5 }
+    },
+    "hellhound": {
+      "nama": "Anjing Neraka",
+      "emoji": "🔥",
+      "hp": 280,
+      "attack": 55,
+      "defense": 18,
+      "hadiah_gold": [130, 190],
+      "hadiah_xp": [260, 360],
+      "drops": { "brimstone_pelt": 0.3 }
+    },
+    "ice_golem": {
+      "nama": "Golem Es",
+      "emoji": "🧊",
+      "hp": 400,
+      "attack": 60,
+      "defense": 35,
+      "hadiah_gold": [180, 250],
+      "hadiah_xp": [400, 550],
+      "drops": { "ice_crystal": 0.5 }
+    },
+    "frost_spirit": {
+      "nama": "Roh Beku",
+      "emoji": "❄️",
+      "hp": 350,
+      "attack": 70,
+      "defense": 25,
+      "hadiah_gold": [200, 280],
+      "hadiah_xp": [450, 600],
+      "drops": { "frost_essence": 0.3 }
+    },
+    "yeti": {
+      "nama": "Yeti",
+      "emoji": "🦍",
+      "hp": 450,
+      "attack": 65,
+      "defense": 30,
+      "hadiah_gold": [190, 260],
+      "hadiah_xp": [420, 580],
+      "drops": { "yeti_fur": 0.4 }
+    },
+    "treant": {
+      "nama": "Treant",
+      "emoji": "🌳",
+      "hp": 600,
+      "attack": 75,
+      "defense": 45,
+      "hadiah_gold": [250, 350],
+      "hadiah_xp": [600, 800],
+      "drops": { "ancient_wood": 0.5 }
+    },
+    "manticore": {
+      "nama": "Manticore",
+      "emoji": "🦁",
+      "hp": 550,
+      "attack": 85,
+      "defense": 35,
+      "hadiah_gold": [280, 400],
+      "hadiah_xp": [650, 850],
+      "drops": { "manticore_spike": 0.3 }
+    },
+    "harpy": {
+      "nama": "Harpy",
+      "emoji": "🦅",
+      "hp": 500,
+      "attack": 90,
+      "defense": 30,
+      "hadiah_gold": [260, 380],
+      "hadiah_xp": [620, 820],
+      "drops": { "harpy_feather": 0.4 }
+    },
+    "shadow_knight": {
+      "nama": "Ksatria Bayangan",
+      "emoji": "♟️",
+      "hp": 800,
+      "attack": 100,
+      "defense": 50,
+      "hadiah_gold": [350, 500],
+      "hadiah_xp": [900, 1200],
+      "drops": { "shadow_crest": 0.3 }
+    },
+    "gargoyle": {
+      "nama": "Gargoyle",
+      "emoji": "🗿",
+      "hp": 900,
+      "attack": 90,
+      "defense": 60,
+      "hadiah_gold": [320, 480],
+      "hadiah_xp": [850, 1150],
+      "drops": { "stone_wing": 0.4 }
+    },
+    "wraith": {
+      "nama": "Wraith",
+      "emoji": "👻",
+      "hp": 750,
+      "attack": 110,
+      "defense": 45,
+      "hadiah_gold": [400, 550],
+      "hadiah_xp": [1000, 1300],
+      "drops": { "soul_essence": 0.2 }
+    },
+    "void_spawn": {
+      "nama": "Makhluk Void",
+      "emoji": "🐙",
+      "hp": 1200,
+      "attack": 120,
+      "defense": 60,
+      "hadiah_gold": [500, 700],
+      "hadiah_xp": [1500, 2000],
+      "drops": { "void_crystal": 0.3 }
+    },
+    "chaos_imp": {
+      "nama": "Imp Kekacauan",
+      "emoji": "😈",
+      "hp": 1000,
+      "attack": 130,
+      "defense": 50,
+      "hadiah_gold": [480, 680],
+      "hadiah_xp": [1400, 1900],
+      "drops": { "chaos_shard": 0.4 }
+    },
+    "phase_spider": {
+      "nama": "Laba-laba Fasa",
+      "emoji": "🕷️",
+      "hp": 1100,
+      "attack": 125,
+      "defense": 55,
+      "hadiah_gold": [520, 720],
+      "hadiah_xp": [1600, 2100],
+      "drops": { "phase_silk": 0.2 }
+    },
+    "boss_giant_wolf": {
+      "nama": "Raja Serigala Alfa",
+      "emoji": "🐺",
+      "hp": 300,
+      "attack": 25,
+      "defense": 10,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_goblin_king": {
+      "nama": "Raja Goblin",
+      "emoji": "👑",
+      "hp": 500,
+      "attack": 35,
+      "defense": 15,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_lich": {
+      "nama": "Lich",
+      "emoji": "💀",
+      "hp": 800,
+      "attack": 50,
+      "defense": 20,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_orc_warlord": {
+      "nama": "Panglima Perang Orc",
+      "emoji": "👹",
+      "hp": 1500,
+      "attack": 70,
+      "defense": 30,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_hydra": {
+      "nama": "Hydra",
+      "emoji": "🐉",
+      "hp": 2500,
+      "attack": 90,
+      "defense": 40,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_ifrit": {
+      "nama": "Ifrit",
+      "emoji": "🔥",
+      "hp": 4000,
+      "attack": 120,
+      "defense": 50,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_frost_giant": {
+      "nama": "Raksasa Es",
+      "emoji": "🧊",
+      "hp": 6000,
+      "attack": 150,
+      "defense": 70,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_griffin": {
+      "nama": "Griffin Penjaga",
+      "emoji": "🦅",
+      "hp": 8000,
+      "attack": 180,
+      "defense": 80,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_vampire_lord": {
+      "nama": "Raja Vampir",
+      "emoji": "🧛",
+      "hp": 12000,
+      "attack": 220,
+      "defense": 100,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
+    },
+    "boss_beholder": {
+      "nama": "Beholder",
+      "emoji": "👁️",
+      "hp": 20000,
+      "attack": 250,
+      "defense": 120,
+      "hadiah_gold": [0, 0],
+      "hadiah_xp": [0, 0],
+      "drops": {}
     }
   }
 }

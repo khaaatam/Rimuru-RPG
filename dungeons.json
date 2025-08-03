@@ -1,0 +1,102 @@
+{
+  "1": {
+    "nama": "Dungeon 1: Hutan Pemula",
+    "emoji": "🌳",
+    "level_rekomendasi": 1,
+    "regular_monsters": ["slime", "bat", "wolf"],
+    "monsters_to_defeat": 3,
+    "boss_id": "boss_giant_wolf",
+    "hadiah_boss": { "gold": 250, "xp": 400 },
+    "cooldown_menit": 5
+  },
+  "2": {
+    "nama": "Dungeon 2: Gua Goblin",
+    "emoji": "⛏️",
+    "level_rekomendasi": 5,
+    "regular_monsters": ["goblin_scout", "giant_rat", "cave_spider"],
+    "monsters_to_defeat": 3,
+    "boss_id": "boss_goblin_king",
+    "hadiah_boss": { "gold": 600, "xp": 800 },
+    "cooldown_menit": 10
+  },
+  "3": {
+    "nama": "Dungeon 3: Reruntuhan Kuno",
+    "emoji": "🏛️",
+    "level_rekomendasi": 10,
+    "regular_monsters": ["skeleton_archer", "zombie", "ghost"],
+    "monsters_to_defeat": 3,
+    "boss_id": "boss_lich",
+    "hadiah_boss": { "gold": 1500, "xp": 2000 },
+    "cooldown_menit": 15
+  },
+  "4": {
+    "nama": "Dungeon 4: Kamp Orc",
+    "emoji": "⛺",
+    "level_rekomendasi": 20,
+    "regular_monsters": ["orc_warrior", "orc_shaman", "war_hound"],
+    "monsters_to_defeat": 4,
+    "boss_id": "boss_orc_warlord",
+    "hadiah_boss": { "gold": 3000, "xp": 4500 },
+    "cooldown_menit": 20
+  },
+  "5": {
+    "nama": "Dungeon 5: Rawa Misterius",
+    "emoji": "🌿",
+    "level_rekomendasi": 30,
+    "regular_monsters": ["swamp_thing", "giant_leech", "lizardman"],
+    "monsters_to_defeat": 4,
+    "boss_id": "boss_hydra",
+    "hadiah_boss": { "gold": 5000, "xp": 7000 },
+    "cooldown_menit": 30
+  },
+  "6": {
+    "nama": "Dungeon 6: Gunung Berapi",
+    "emoji": "🌋",
+    "level_rekomendasi": 40,
+    "regular_monsters": ["fire_elemental", "magma_slime", "hellhound"],
+    "monsters_to_defeat": 5,
+    "boss_id": "boss_ifrit",
+    "hadiah_boss": { "gold": 8000, "xp": 12000 },
+    "cooldown_menit": 45
+  },
+  "7": {
+    "nama": "Dungeon 7: Puncak Beku",
+    "emoji": "🏔️",
+    "level_rekomendasi": 50,
+    "regular_monsters": ["ice_golem", "frost_spirit", "yeti"],
+    "monsters_to_defeat": 5,
+    "boss_id": "boss_frost_giant",
+    "hadiah_boss": { "gold": 12000, "xp": 18000 },
+    "cooldown_menit": 60
+  },
+  "8": {
+    "nama": "Dungeon 8: Hutan Terlarang",
+    "emoji": "🌲",
+    "level_rekomendasi": 60,
+    "regular_monsters": ["treant", "manticore", "harpy"],
+    "monsters_to_defeat": 5,
+    "boss_id": "boss_griffin",
+    "hadiah_boss": { "gold": 18000, "xp": 25000 },
+    "cooldown_menit": 90
+  },
+  "9": {
+    "nama": "Dungeon 9: Kastil Bayangan",
+    "emoji": "🏰",
+    "level_rekomendasi": 75,
+    "regular_monsters": ["shadow_knight", "gargoyle", "wraith"],
+    "monsters_to_defeat": 6,
+    "boss_id": "boss_vampire_lord",
+    "hadiah_boss": { "gold": 25000, "xp": 40000 },
+    "cooldown_menit": 120
+  },
+  "10": {
+    "nama": "Dungeon 10: Gerbang Dimensi",
+    "emoji": "🌌",
+    "level_rekomendasi": 90,
+    "regular_monsters": ["void_spawn", "chaos_imp", "phase_spider"],
+    "monsters_to_defeat": 6,
+    "boss_id": "boss_beholder",
+    "hadiah_boss": { "gold": 50000, "xp": 75000 },
+    "cooldown_menit": 180
+  }
+}
