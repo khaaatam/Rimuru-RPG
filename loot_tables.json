@@ -1,0 +1,51 @@
+{
+  "regular_monsters": {
+    "slime": { "slime_gel": 0.75 },
+    "bat": { "bat_wing": 0.6 },
+    "wolf": { "wolf_fang": 0.5 },
+    "goblin_scout": { "goblin_ear": 0.7 },
+    "giant_rat": { "rat_tail": 0.8 },
+    "cave_spider": { "spider_silk": 0.4 },
+    "skeleton_archer": { "bone_arrow": 0.6 },
+    "zombie": { "rotten_flesh": 0.9 },
+    "ghost": { "ectoplasm": 0.3 },
+    "orc_warrior": { "orc_tusk": 0.4 },
+    "orc_shaman": { "shaman_staff": 0.2 },
+    "war_hound": { "armored_pelt": 0.3 },
+    "swamp_thing": { "mossy_heart": 0.4 },
+    "giant_leech": { "bloated_sac": 0.5 },
+    "lizardman": { "lizard_scale": 0.3 },
+    "fire_elemental": { "fire_core": 0.4 },
+    "magma_slime": { "magma_stone": 0.5 },
+    "hellhound": { "brimstone_pelt": 0.3 },
+    "ice_golem": { "ice_crystal": 0.5 },
+    "frost_spirit": { "frost_essence": 0.3 },
+    "yeti": { "yeti_fur": 0.4 },
+    "treant": { "ancient_wood": 0.5 },
+    "manticore": { "manticore_spike": 0.3 },
+    "harpy": { "harpy_feather": 0.4 },
+    "shadow_knight": { "shadow_crest": 0.3 },
+    "gargoyle": { "stone_wing": 0.4 },
+    "wraith": { "soul_essence": 0.2 },
+    "void_spawn": { "void_crystal": 0.3 },
+    "chaos_imp": { "chaos_shard": 0.4 },
+    "phase_spider": { "phase_silk": 0.2 }
+  },
+  "elite_bosses": {
+    "elite_slime": { "royal_jelly": 0.5 },
+    "elite_bat": { "vampire_fang": 0.4 },
+    "elite_wolf": { "alpha_pelt": 0.3 }
+  },
+  "dungeon_bosses": {
+    "boss_giant_wolf": { "taring_raja_serigala": 1.0 },
+    "boss_goblin_king": { "mahkota_goblin": 1.0 },
+    "boss_lich": { "lich_phylactery": 1.0 },
+    "boss_orc_warlord": { "warlord_banner": 1.0 },
+    "boss_hydra": { "hydra_scale": 1.0 },
+    "boss_ifrit": { "ifrit_core": 1.0 },
+    "boss_frost_giant": { "giant_ice_shard": 1.0 },
+    "boss_griffin": { "griffin_beak": 1.0 },
+    "boss_vampire_lord": { "vampire_crest": 1.0 },
+    "boss_beholder": { "beholder_eye": 1.0 }
+  }
+}

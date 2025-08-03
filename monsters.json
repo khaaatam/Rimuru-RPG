@@ -7,8 +7,7 @@
       "attack": 5,
       "defense": 2,
       "hadiah_gold": [5, 15],
-      "hadiah_xp": [10, 20],
-      "drops": { "slime_gel": 0.5 }
+      "hadiah_xp": [10, 20]
     },
     "bat": {
       "nama": "Kelelawar",
@@ -17,8 +16,7 @@
       "attack": 7,
       "defense": 1,
       "hadiah_gold": [3, 12],
-      "hadiah_xp": [8, 18],
-      "drops": { "bat_wing": 0.4 }
+      "hadiah_xp": [8, 18]
     },
     "wolf": {
       "nama": "Serigala",
@@ -27,8 +25,7 @@
       "attack": 10,
       "defense": 3,
       "hadiah_gold": [10, 20],
-      "hadiah_xp": [15, 25],
-      "drops": { "wolf_fang": 0.3 }
+      "hadiah_xp": [15, 25]
     },
     "goblin_scout": {
       "nama": "Pramuka Goblin",
@@ -37,8 +34,7 @@
       "attack": 12,
       "defense": 4,
       "hadiah_gold": [15, 25],
-      "hadiah_xp": [20, 30],
-      "drops": { "goblin_ear": 0.5 }
+      "hadiah_xp": [20, 30]
     },
     "giant_rat": {
       "nama": "Tikus Raksasa",
@@ -47,8 +43,7 @@
       "attack": 9,
       "defense": 5,
       "hadiah_gold": [12, 22],
-      "hadiah_xp": [18, 28],
-      "drops": { "rat_tail": 0.6 }
+      "hadiah_xp": [18, 28]
     },
     "cave_spider": {
       "nama": "Laba-laba Gua",
@@ -57,8 +52,7 @@
       "attack": 14,
       "defense": 3,
       "hadiah_gold": [20, 30],
-      "hadiah_xp": [25, 35],
-      "drops": { "spider_silk": 0.4 }
+      "hadiah_xp": [25, 35]
     },
     "skeleton_archer": {
       "nama": "Pemanah Tengkorak",
@@ -67,8 +61,7 @@
       "attack": 18,
       "defense": 5,
       "hadiah_gold": [25, 40],
-      "hadiah_xp": [35, 50],
-      "drops": { "bone_arrow": 0.5 }
+      "hadiah_xp": [35, 50]
     },
     "zombie": {
       "nama": "Zombie",
@@ -77,8 +70,7 @@
       "attack": 15,
       "defense": 8,
       "hadiah_gold": [30, 45],
-      "hadiah_xp": [40, 60],
-      "drops": { "rotten_flesh": 0.7 }
+      "hadiah_xp": [40, 60]
     },
     "ghost": {
       "nama": "Hantu",
@@ -87,8 +79,7 @@
       "attack": 20,
       "defense": 10,
       "hadiah_gold": [35, 50],
-      "hadiah_xp": [50, 70],
-      "drops": { "ectoplasm": 0.3 }
+      "hadiah_xp": [50, 70]
     },
     "orc_warrior": {
       "nama": "Prajurit Orc",
@@ -97,8 +88,7 @@
       "attack": 25,
       "defense": 12,
       "hadiah_gold": [50, 75],
-      "hadiah_xp": [80, 110],
-      "drops": { "orc_tusk": 0.4 }
+      "hadiah_xp": [80, 110]
     },
     "orc_shaman": {
       "nama": "Dukun Orc",
@@ -107,8 +97,7 @@
       "attack": 30,
       "defense": 8,
       "hadiah_gold": [60, 80],
-      "hadiah_xp": [90, 120],
-      "drops": { "shaman_staff": 0.2 }
+      "hadiah_xp": [90, 120]
     },
     "war_hound": {
       "nama": "Anjing Perang",
@@ -117,8 +106,7 @@
       "attack": 28,
       "defense": 10,
       "hadiah_gold": [40, 60],
-      "hadiah_xp": [70, 100],
-      "drops": { "armored_pelt": 0.3 }
+      "hadiah_xp": [70, 100]
     },
     "swamp_thing": {
       "nama": "Monster Rawa",
@@ -127,8 +115,7 @@
       "attack": 35,
       "defense": 15,
       "hadiah_gold": [80, 120],
-      "hadiah_xp": [150, 200],
-      "drops": { "mossy_heart": 0.4 }
+      "hadiah_xp": [150, 200]
     },
     "giant_leech": {
       "nama": "Lintah Raksasa",
@@ -137,8 +124,7 @@
       "attack": 30,
       "defense": 20,
       "hadiah_gold": [70, 110],
-      "hadiah_xp": [140, 190],
-      "drops": { "bloated_sac": 0.5 }
+      "hadiah_xp": [140, 190]
     },
     "lizardman": {
       "nama": "Manusia Kadal",
@@ -147,8 +133,7 @@
       "attack": 40,
       "defense": 18,
       "hadiah_gold": [90, 130],
-      "hadiah_xp": [160, 220],
-      "drops": { "lizard_scale": 0.3 }
+      "hadiah_xp": [160, 220]
     },
     "fire_elemental": {
       "nama": "Elemental Api",
@@ -157,8 +142,7 @@
       "attack": 50,
       "defense": 20,
       "hadiah_gold": [120, 180],
-      "hadiah_xp": [250, 350],
-      "drops": { "fire_core": 0.4 }
+      "hadiah_xp": [250, 350]
     },
     "magma_slime": {
       "nama": "Slime Magma",
@@ -167,8 +151,7 @@
       "attack": 40,
       "defense": 25,
       "hadiah_gold": [110, 170],
-      "hadiah_xp": [240, 340],
-      "drops": { "magma_stone": 0.5 }
+      "hadiah_xp": [240, 340]
     },
     "hellhound": {
       "nama": "Anjing Neraka",
@@ -177,8 +160,7 @@
       "attack": 55,
       "defense": 18,
       "hadiah_gold": [130, 190],
-      "hadiah_xp": [260, 360],
-      "drops": { "brimstone_pelt": 0.3 }
+      "hadiah_xp": [260, 360]
     },
     "ice_golem": {
       "nama": "Golem Es",
@@ -187,8 +169,7 @@
       "attack": 60,
       "defense": 35,
       "hadiah_gold": [180, 250],
-      "hadiah_xp": [400, 550],
-      "drops": { "ice_crystal": 0.5 }
+      "hadiah_xp": [400, 550]
     },
     "frost_spirit": {
       "nama": "Roh Beku",
@@ -197,8 +178,7 @@
       "attack": 70,
       "defense": 25,
       "hadiah_gold": [200, 280],
-      "hadiah_xp": [450, 600],
-      "drops": { "frost_essence": 0.3 }
+      "hadiah_xp": [450, 600]
     },
     "yeti": {
       "nama": "Yeti",
@@ -207,8 +187,7 @@
       "attack": 65,
       "defense": 30,
       "hadiah_gold": [190, 260],
-      "hadiah_xp": [420, 580],
-      "drops": { "yeti_fur": 0.4 }
+      "hadiah_xp": [420, 580]
     },
     "treant": {
       "nama": "Treant",
@@ -217,8 +196,7 @@
       "attack": 75,
       "defense": 45,
       "hadiah_gold": [250, 350],
-      "hadiah_xp": [600, 800],
-      "drops": { "ancient_wood": 0.5 }
+      "hadiah_xp": [600, 800]
     },
     "manticore": {
       "nama": "Manticore",
@@ -227,8 +205,7 @@
       "attack": 85,
       "defense": 35,
       "hadiah_gold": [280, 400],
-      "hadiah_xp": [650, 850],
-      "drops": { "manticore_spike": 0.3 }
+      "hadiah_xp": [650, 850]
     },
     "harpy": {
       "nama": "Harpy",
@@ -237,8 +214,7 @@
       "attack": 90,
       "defense": 30,
       "hadiah_gold": [260, 380],
-      "hadiah_xp": [620, 820],
-      "drops": { "harpy_feather": 0.4 }
+      "hadiah_xp": [620, 820]
     },
     "shadow_knight": {
       "nama": "Ksatria Bayangan",
@@ -247,8 +223,7 @@
       "attack": 100,
       "defense": 50,
       "hadiah_gold": [350, 500],
-      "hadiah_xp": [900, 1200],
-      "drops": { "shadow_crest": 0.3 }
+      "hadiah_xp": [900, 1200]
     },
     "gargoyle": {
       "nama": "Gargoyle",
@@ -257,8 +232,7 @@
       "attack": 90,
       "defense": 60,
       "hadiah_gold": [320, 480],
-      "hadiah_xp": [850, 1150],
-      "drops": { "stone_wing": 0.4 }
+      "hadiah_xp": [850, 1150]
     },
     "wraith": {
       "nama": "Wraith",
@@ -267,8 +241,7 @@
       "attack": 110,
       "defense": 45,
       "hadiah_gold": [400, 550],
-      "hadiah_xp": [1000, 1300],
-      "drops": { "soul_essence": 0.2 }
+      "hadiah_xp": [1000, 1300]
     },
     "void_spawn": {
       "nama": "Makhluk Void",
@@ -277,8 +250,7 @@
       "attack": 120,
       "defense": 60,
       "hadiah_gold": [500, 700],
-      "hadiah_xp": [1500, 2000],
-      "drops": { "void_crystal": 0.3 }
+      "hadiah_xp": [1500, 2000]
     },
     "chaos_imp": {
       "nama": "Imp Kekacauan",
@@ -287,8 +259,7 @@
       "attack": 130,
       "defense": 50,
       "hadiah_gold": [480, 680],
-      "hadiah_xp": [1400, 1900],
-      "drops": { "chaos_shard": 0.4 }
+      "hadiah_xp": [1400, 1900]
     },
     "phase_spider": {
       "nama": "Laba-laba Fasa",
@@ -297,8 +268,7 @@
       "attack": 125,
       "defense": 55,
       "hadiah_gold": [520, 720],
-      "hadiah_xp": [1600, 2100],
-      "drops": { "phase_silk": 0.2 }
+      "hadiah_xp": [1600, 2100]
     },
     "boss_giant_wolf": {
       "nama": "Raja Serigala Alfa",
@@ -307,8 +277,7 @@
       "attack": 25,
       "defense": 10,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_goblin_king": {
       "nama": "Raja Goblin",
@@ -317,8 +286,7 @@
       "attack": 35,
       "defense": 15,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_lich": {
       "nama": "Lich",
@@ -327,8 +295,7 @@
       "attack": 50,
       "defense": 20,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_orc_warlord": {
       "nama": "Panglima Perang Orc",
@@ -337,8 +304,7 @@
       "attack": 70,
       "defense": 30,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_hydra": {
       "nama": "Hydra",
@@ -347,8 +313,7 @@
       "attack": 90,
       "defense": 40,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_ifrit": {
       "nama": "Ifrit",
@@ -357,8 +322,7 @@
       "attack": 120,
       "defense": 50,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_frost_giant": {
       "nama": "Raksasa Es",
@@ -367,8 +331,7 @@
       "attack": 150,
       "defense": 70,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_griffin": {
       "nama": "Griffin Penjaga",
@@ -377,8 +340,7 @@
       "attack": 180,
       "defense": 80,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_vampire_lord": {
       "nama": "Raja Vampir",
@@ -387,8 +349,7 @@
       "attack": 220,
       "defense": 100,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
     },
     "boss_beholder": {
       "nama": "Beholder",
@@ -397,8 +358,34 @@
       "attack": 250,
       "defense": 120,
       "hadiah_gold": [0, 0],
-      "hadiah_xp": [0, 0],
-      "drops": {}
+      "hadiah_xp": [0, 0]
+    },
+    "elite_slime": {
+      "nama": "Ratu Slime",
+      "emoji": "👑",
+      "hp": 250,
+      "attack": 20,
+      "defense": 15,
+      "hadiah_gold": [200, 300],
+      "hadiah_xp": [300, 450]
+    },
+    "elite_bat": {
+      "nama": "Kelelawar Vampir",
+      "emoji": "🦇",
+      "hp": 200,
+      "attack": 25,
+      "defense": 10,
+      "hadiah_gold": [180, 280],
+      "hadiah_xp": [280, 420]
+    },
+    "elite_wolf": {
+      "nama": "Serigala Alfa",
+      "emoji": "🐺",
+      "hp": 300,
+      "attack": 30,
+      "defense": 12,
+      "hadiah_gold": [220, 320],
+      "hadiah_xp": [320, 480]
     }
   }
 }

@@ -1,0 +1,52 @@
+{
+    "dungeon_1": [
+        {"id": "elite_slime", "nama": "Ratu Slime", "emoji": "👑"},
+        {"id": "elite_bat", "nama": "Kelelawar Vampir", "emoji": "🦇"},
+        {"id": "elite_wolf", "nama": "Serigala Alfa", "emoji": "🐺"}
+    ],
+    "dungeon_2": [
+        {"id": "elite_goblin", "nama": "Prajurit Goblin", "emoji": "👺"},
+        {"id": "elite_rat", "nama": "Tikus Wabah", "emoji": "🐀"},
+        {"id": "elite_spider", "nama": "Laba-laba Berbisa", "emoji": "🕷️"}
+    ],
+    "dungeon_3": [
+        {"id": "elite_skeleton", "nama": "Jenderal Tengkorak", "emoji": "💀"},
+        {"id": "elite_zombie", "nama": "Zombie Raksasa", "emoji": "🧟"},
+        {"id": "elite_ghost", "nama": "Arwah Penasaran", "emoji": "👻"}
+    ],
+    "dungeon_4": [
+        {"id": "elite_orc", "nama": "Panglima Orc", "emoji": "👹"},
+        {"id": "elite_shaman", "nama": "Dukun Orc Sesat", "emoji": "🧙"},
+        {"id": "elite_hound", "nama": "Anjing Perang Neraka", "emoji": "🐕"}
+    ],
+    "dungeon_5": [
+        {"id": "elite_swamp", "nama": "Raksasa Rawa", "emoji": "🌱"},
+        {"id": "elite_leech", "nama": "Lintah Ratu", "emoji": "🩸"},
+        {"id": "elite_lizardman", "nama": "Prajurit Kadal", "emoji": "🦎"}
+    ],
+    "dungeon_6": [
+        {"id": "elite_fire_elemental", "nama": "Elemental Api Purba", "emoji": "🔥"},
+        {"id": "elite_magma_slime", "nama": "Slime Magma Raksasa", "emoji": "☄️"},
+        {"id": "elite_hellhound", "nama": "Anjing Neraka Alfa", "emoji": "🔥"}
+    ],
+    "dungeon_7": [
+        {"id": "elite_ice_golem", "nama": "Golem Es Abadi", "emoji": "🧊"},
+        {"id": "elite_frost_spirit", "nama": "Roh Beku Kuno", "emoji": "❄️"},
+        {"id": "elite_yeti", "nama": "Yeti Ganas", "emoji": "🦍"}
+    ],
+    "dungeon_8": [
+        {"id": "elite_treant", "nama": "Treant Kuno", "emoji": "🌳"},
+        {"id": "elite_manticore", "nama": "Manticore Ganas", "emoji": "🦁"},
+        {"id": "elite_harpy", "nama": "Ratu Harpy", "emoji": "🦅"}
+    ],
+    "dungeon_9": [
+        {"id": "elite_shadow_knight", "nama": "Ksatria Bayangan Elite", "emoji": "♟️"},
+        {"id": "elite_gargoyle", "nama": "Gargoyle Kuno", "emoji": "🗿"},
+        {"id": "elite_wraith", "nama": "Wraith Raja", "emoji": "👻"}
+    ],
+    "dungeon_10": [
+        {"id": "elite_void_spawn", "nama": "Makhluk Void Elite", "emoji": "🐙"},
+        {"id": "elite_chaos_imp", "nama": "Imp Kekacauan Raja", "emoji": "😈"},
+        {"id": "elite_phase_spider", "nama": "Laba-laba Fasa Ratu", "emoji": "🕷️"}
+    ]
+}

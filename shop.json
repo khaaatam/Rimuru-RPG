@@ -16,12 +16,12 @@
     "efek": { "defense": 132 }
   },
   "ramuan": {
-    "nama_tampilan": "Ramuan Kesehatan",
-    "harga": 25,
-    "deskripsi": "Memulihkan 50 HP.",
+    "nama_tampilan": "Ramuan Kesehatan Penuh",
+    "harga": 75,
+    "deskripsi": "Memulihkan HP ke jumlah maksimum.",
     "emoji": "🧪",
     "tipe": "konsumsi",
-    "efek": { "hp": 50 }
+    "efek": { "hp": "full" }
   },
   "pedang_pemula": {
     "nama_tampilan": "Pedang Pemula",
@@ -29,8 +29,147 @@
     "deskripsi": "Menambah 3 Attack.",
     "emoji": "🗡️",
     "tipe": "senjata",
-    "efek": {
-      "attack": 3
-    }
+    "efek": { "attack": 3 }
+  },
+
+  "slime_gel": {
+    "nama_tampilan": "Slime Gel",
+    "harga": 5,
+    "deskripsi": "Material lengket.",
+    "emoji": "💧",
+    "tipe": "material"
+  },
+  "bat_wing": {
+    "nama_tampilan": "Sayap Kelelawar",
+    "harga": 4,
+    "deskripsi": "Material ringan.",
+    "emoji": "🦇",
+    "tipe": "material"
+  },
+  "wolf_fang": {
+    "nama_tampilan": "Taring Serigala",
+    "harga": 8,
+    "deskripsi": "Material tajam.",
+    "emoji": "🦷",
+    "tipe": "material"
+  },
+  "goblin_ear": {
+    "nama_tampilan": "Telinga Goblin",
+    "harga": 7,
+    "deskripsi": "Tanda kemenangan atas Goblin.",
+    "emoji": "👂",
+    "tipe": "material"
+  },
+  "rat_tail": {
+    "nama_tampilan": "Ekor Tikus",
+    "harga": 3,
+    "deskripsi": "Panjang dan menjijikkan.",
+    "emoji": "🐀",
+    "tipe": "material"
+  },
+  "spider_silk": {
+    "nama_tampilan": "Sutra Laba-laba",
+    "harga": 10,
+    "deskripsi": "Kuat dan lengket.",
+    "emoji": "🕸️",
+    "tipe": "material"
+  },
+  "bone_arrow": {
+    "nama_tampilan": "Anak Panah Tulang",
+    "harga": 12,
+    "deskripsi": "Dibuat dari tulang belulang.",
+    "emoji": "💀",
+    "tipe": "material"
+  },
+  "rotten_flesh": {
+    "nama_tampilan": "Daging Busuk",
+    "harga": 1,
+    "deskripsi": "Sangat tidak enak dilihat.",
+    "emoji": "🧟",
+    "tipe": "material"
+  },
+  "ectoplasm": {
+    "nama_tampilan": "Ektoplasma",
+    "harga": 20,
+    "deskripsi": "Sisa-sisa spektral.",
+    "emoji": "👻",
+    "tipe": "material"
+  },
+  "orc_tusk": {
+    "nama_tampilan": "Taring Orc",
+    "harga": 25,
+    "deskripsi": "Besar dan mengintimidasi.",
+    "emoji": "👹",
+    "tipe": "material"
+  },
+  "shaman_staff": {
+    "nama_tampilan": "Tongkat Dukun",
+    "harga": 50,
+    "deskripsi": "Dihiasi dengan bulu misterius.",
+    "emoji": "🌿",
+    "tipe": "material"
+  },
+  "armored_pelt": {
+    "nama_tampilan": "Kulit Berzirah",
+    "harga": 40,
+    "deskripsi": "Kulit keras dari Anjing Perang.",
+    "emoji": "🛡️",
+    "tipe": "material"
+  },
+  "royal_jelly": {
+    "nama_tampilan": "Royal Jelly",
+    "harga": 150,
+    "deskripsi": "Jeli spesial dari Ratu Slime.",
+    "emoji": "👑",
+    "tipe": "material"
+  },
+  "vampire_fang": {
+    "nama_tampilan": "Taring Vampir",
+    "harga": 200,
+    "deskripsi": "Taring tajam dari Kelelawar Vampir.",
+    "emoji": "🩸",
+    "tipe": "material"
+  },
+  "alpha_pelt": {
+    "nama_tampilan": "Kulit Alfa",
+    "harga": 180,
+    "deskripsi": "Kulit dari pemimpin kawanan.",
+    "emoji": "🐺",
+    "tipe": "material"
+  },
+  "goblin_emblem": {
+    "nama_tampilan": "Lambang Goblin",
+    "harga": 250,
+    "deskripsi": "Lambang dari prajurit Goblin elit.",
+    "emoji": "👺",
+    "tipe": "material"
+  },
+  "plague_essence": {
+    "nama_tampilan": "Esensi Wabah",
+    "harga": 220,
+    "deskripsi": "Sari dari penyakit mematikan.",
+    "emoji": "☣️",
+    "tipe": "material"
+  },
+  "venom_sac": {
+    "nama_tampilan": "Kantung Racun",
+    "harga": 280,
+    "deskripsi": "Berisi racun yang sangat kuat.",
+    "emoji": "☠️",
+    "tipe": "material"
+  },
+  "taring_raja_serigala": {
+    "nama_tampilan": "Taring Raja Serigala",
+    "harga": 500,
+    "deskripsi": "Material legendaris dari boss.",
+    "emoji": "🐺",
+    "tipe": "material"
+  },
+  "mahkota_goblin": {
+    "nama_tampilan": "Mahkota Goblin",
+    "harga": 800,
+    "deskripsi": "Mahkota dari Raja Goblin.",
+    "emoji": "👑",
+    "tipe": "material"
   }
 }

@@ -13,7 +13,9 @@ class LogicHandler:
         self.MONSTERS = self.load_data_file("monsters.json")
         self.QUESTS = self.load_data_file("quests.json")
         self.DUNGEONS = self.load_data_file("dungeons.json")
-        print("Data pemain, toko, monster, dungeon dan quest berhasil dimuat.")
+        self.LOOT_TABLES = self.load_data_file("loot_tables.json")
+        self.ELITE_BOSSES = self.load_data_file("elite_bosses.json")
+        print("Semua data berhasil dimuat.")
 
     def load_data_file(self, filename):
         if os.path.exists(filename):
@@ -26,53 +28,72 @@ class LogicHandler:
         with open(DB_FILE, 'w') as f:
             json.dump(self.players, f, indent=4)
 
-    # --- FUNGSI LOGIKA GAME INTI ---
+    # --- FUNGSI LOGIKA INTI GAME ---
+    
     def calculate_xp_for_level(self, level):
         return 100 * level
+
+    def _cek_level_up_logic(self, user_id_str):
+        player_data = self.players[user_id_str]
+        player_level = player_data['level']
+        required_xp = self.calculate_xp_for_level(player_level)
+        if player_data['xp'] >= required_xp:
+            player_data['level'] += 1
+            player_data['xp'] -= required_xp
+            player_data['max_hp'] += 20
+            player_data['hp'] = player_data['max_hp']
+            return True, f"\n🎉 **SELAMAT!** Anda naik ke **Level {player_data['level']}**!"
+        return False, ""
+
+    def _cek_quest_progress_logic(self, user_id_str, monster_id):
+        active_quest = self.players[user_id_str].get('active_quest')
+        if not active_quest or active_quest.get('id') is None:
+            return None
+        quest_info = self.QUESTS.get(active_quest['id'])
+        if not quest_info or quest_info.get('target_monster') != monster_id:
+            return None
+        active_quest['progress'] = active_quest.get('progress', 0) + 1
+        if active_quest['progress'] >= quest_info.get('jumlah_target', 999):
+            hadiah_gold = quest_info.get('hadiah_gold', 0)
+            hadiah_xp = quest_info.get('hadiah_xp', 0)
+            self.players[user_id_str]['gold'] += hadiah_gold
+            self.players[user_id_str]['xp'] += hadiah_xp
+            self.players[user_id_str]['active_quest'] = {"id": None, "progress": 0}
+            return f"\n**QUEST SELESAI: {quest_info['nama']}!** Hadiah: **{hadiah_gold} Gold** & **{hadiah_xp} XP**."
+        # Mengembalikan pesan progres jika quest belum selesai
+        return f"\n📜 Progres Quest: **{active_quest['progress']}/{quest_info['jumlah_target']}**."
+
+    # --- LOGIKA KARAKTER & PROFIL ---
 
     def _mulai_logic(self, user_id):
         user_id_str = str(user_id)
         if user_id_str in self.players:
             return "Anda sudah memiliki karakter!"
         else:
-            # Ini adalah data lengkap untuk pemain baru
             self.players[user_id_str] = {
-                # Atribut Dasar
-                "level": 1,
-                "xp": 0,
-                "gold": 10,
-                "hp": 100,
-                "max_hp": 100,
-                
-                # Atribut Pertarungan
-                "attack": 5,
-                "defense": 2,
-                
-                # Perlengkapan Awal
+                "level": 1, "xp": 0, "gold": 50, # <-- Gold awal ditambah
+                "hp": 100, "max_hp": 100,
+                "attack": 10, 
+                "defense": 5,
                 "equipment": {
-                    "senjata": None,
+                    "senjata": "pedang_pemula", 
                     "armor": None
                 },
-                "inventory": {},
-
-                # Progres Dungeon Awal
+                "inventory": {}, 
                 "dungeon_progress": {
-                    "current_dungeon": 1,
-                    "monsters_defeated": 0,
-                    "boss_unlocked": False,
+                    "unlocked": 1, 
                     "cooldown_until": "2000-01-01T00:00:00"
-                },
-
-                # Data Lain
+                    },
+                "hunt_cooldown_until": "2000-01-01T00:00:00",
+                "jelajah_cooldown_until": "2000-01-01T00:00:00",
                 "active_quest": {
-                    "id": None,
+                    "id": None, 
                     "progress": 0
-                },
+                    },
                 "last_daily": "2000-01-01T00:00:00.000000"
             }
-            self.save_player_data()
-            return "Selamat datang di dunia petualangan!"
-
+        self.save_player_data()
+        return "Selamat datang di dunia petualangan!"
     def _get_player_total_stats(self, user_id):
         user_id_str = str(user_id)
         player_data = self.players[user_id_str]
@@ -87,176 +108,279 @@ class LogicHandler:
 
     def _profil_logic(self, user_id, user_name, user_avatar_url):
         user_id_str = str(user_id)
-        if user_id_str not in self.players:
-            return None
-
+        if user_id_str not in self.players: return None
         player_data = self.players[user_id_str]
         required_xp = self.calculate_xp_for_level(player_data['level'])
         total_stats = self._get_player_total_stats(user_id_str)
-    
-        embed = discord.Embed(
-            title=f"Profil: {user_name}",
-            color=discord.Color.from_str("#FADA5E") # Warna emas yang lebih lembut
-        )
+        embed = discord.Embed(title=f"Profil: {user_name}", color=discord.Color.from_str("#FADA5E"))
         embed.set_thumbnail(url=user_avatar_url)
-    
-    # --- BAGIAN YANG DIUBAH ---
-
-    # Baris 1: Info Dasar
         embed.add_field(name="🌟 Level", value=player_data['level'], inline=True)
         embed.add_field(name="✨ XP", value=f"{player_data['xp']}/{required_xp}", inline=True)
         embed.add_field(name="💰 Gold", value=player_data['gold'], inline=True)
-    
-    # Baris 2: Atribut Pertarungan (digabung agar ringkas)
         embed.add_field(name="❤️ HP", value=f"{player_data['hp']}/{player_data.get('max_hp', 100)}", inline=True)
         embed.add_field(name="⚔️ Attack", value=total_stats['attack'], inline=True)
         embed.add_field(name="🛡️ Defense", value=total_stats['defense'], inline=True)
-
-    # Baris 3: Perlengkapan (kategori baru)
+        embed.add_field(name=f"Dungeon {player_data['dungeon_progress']['current_dungeon']}", value=f"Monsters Defeated: {player_data['dungeon_progress']['monsters_defeated']}", inline=True)
         equipment = player_data.get('equipment', {})
         senjata_id = equipment.get('senjata')
-        armor_id = equipment.get('armor') # Disiapkan untuk masa depan
-
+        armor_id = equipment.get('armor')
         senjata_nama = self.SHOP_ITEMS.get(senjata_id, {}).get('nama_tampilan', 'Kosong') if senjata_id else 'Kosong'
         armor_nama = self.SHOP_ITEMS.get(armor_id, {}).get('nama_tampilan', 'Kosong') if armor_id else 'Kosong'
-    
-        embed.add_field(
-            name="`Perlengkapan Terpasang`",
-            value=f"🗡️ **Senjata**: {senjata_nama}\n🛡️ **Armor**: {armor_nama}",
-            inline=False
-        )
-    # ---------------------------
-    
+        embed.add_field(name="`Perlengkapan Terpasang`", value=f"🗡️ **Senjata**: {senjata_nama}\n🛡️ **Armor**: {armor_nama}", inline=False)
         embed.set_footer(text=f"ID Pemain: {user_id_str}")
         return embed
 
-    def _jelajah_logic(self, user_id):
-        user_id_str = str(user_id)
-        if user_id_str not in self.players: return None
-        gold_ditemukan = random.randint(5, 20)
-        xp_didapat = random.randint(10, 25)
-        self.players[user_id_str]['gold'] += gold_ditemukan
-        self.players[user_id_str]['xp'] += xp_didapat
-        pesan_hasil = f"Anda menjelajahi hutan dan mendapatkan **{gold_ditemukan} Gold** serta **{xp_didapat} XP**!"
-        leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
-        if leveled_up: pesan_hasil += pesan_level_up
-        self.save_player_data()
-        return pesan_hasil
+    # --- LOGIKA AKSI RPG ---
 
-    def _hunting_logic(self, user_id, zone_id=None):
-        user_id_str = str(user_id)
-        if user_id_str not in self.players: return None
-        
-        # --- 1. Logika Zona ---
-        if not zone_id:
-            zona_list = [f"- `{zid}` ({zinfo['nama_tampilan']})" for zid, zinfo in self.MONSTERS.get('zona', {}).items()]
-            return "Anda harus memilih zona berburu. Zona tersedia:\n" + "\n".join(zona_list)
-
-        zone_id = zone_id.lower()
-        if zone_id not in self.MONSTERS.get('zona', {}):
-            return "Zona tidak ditemukan."
-
-        zona_info = self.MONSTERS['zona'][zone_id]
-        player_level = self.players[user_id_str]['level']
-        if player_level < zona_info['level_rekomendasi']:
-            return f"Level Anda terlalu rendah untuk **{zona_info['nama_tampilan']}**. Level rekomendasi: {zona_info['level_rekomendasi']}."
-
-        # --- 2. Persiapan Pertarungan ---
-        if self.players[user_id_str]['hp'] <= 0: return "HP Anda terlalu rendah untuk berburu!"
-        
-        monster_id = random.choice(zona_info['monster_list'])
-        monster = self.MONSTERS['monster_data'][monster_id].copy()
+    def _generic_fight_logic(self, player_hp, player_stats, monster):
         monster_hp = monster['hp']
-        player_stats = self._get_player_total_stats(user_id_str)
-        player_hp = self.players[user_id_str]['hp']
-        log = [f"Anda memasuki **{zona_info['nama_tampilan']}** dan bertemu **{monster['nama']}** {monster['emoji']}!"]
-
-        # --- 3. Simulasi Pertarungan ---
+        log = []
         while player_hp > 0 and monster_hp > 0:
             damage_ke_monster = max(1, player_stats['attack'] - monster['defense'])
             monster_hp -= damage_ke_monster
-            log.append(f"⚔️ Anda menyerang, **{damage_ke_monster}** damage. (HP Monster: {max(0, monster_hp)})")
+            log.append(f"⚔️ Anda menyerang, **{damage_ke_monster}** damage.")
             if monster_hp <= 0: break
-            
             damage_ke_pemain = max(1, monster['attack'] - player_stats['defense'])
             player_hp -= damage_ke_pemain
-            log.append(f"{monster['emoji']} Monster menyerang, **{damage_ke_pemain}** damage. (HP Anda: {max(0, player_hp)})")
+            log.append(f"{monster['emoji']} Monster menyerang, **{damage_ke_pemain}** damage.")
+        return player_hp, log
 
-        # --- 4. Hasil Pertarungan ---
-        if player_hp > 0:
+    def _hunt_logic(self, user_id):
+        user_id_str = str(user_id)
+        if user_id_str not in self.players: return "Anda belum membuat karakter!"
+        player_data = self.players[user_id_str]
+
+        cooldown = datetime.fromisoformat(player_data.get("hunt_cooldown_until", "2000-01-01T00:00:00"))
+        if datetime.now() < cooldown:
+            sisa_detik = int((cooldown - datetime.now()).total_seconds())
+            return f"Anda baru saja berburu! Coba lagi dalam **{sisa_detik} detik**."
+
+        if player_data['hp'] <= 0: return "HP Anda terlalu rendah!"
+        
+        dungeon_id = str(player_data['dungeon_progress'].get('unlocked', 1))
+        dungeon_info = self.DUNGEONS[dungeon_id]
+        monster_id = random.choice(dungeon_info['regular_monsters'])
+        monster = self.MONSTERS['monster_data'][monster_id].copy()
+
+        player_hp_final, log_pertarungan = self._generic_fight_logic(player_data['hp'], self._get_player_total_stats(user_id_str), monster)
+        log = [f"**{dungeon_info['nama']}** | Anda bertemu **{monster['nama']}** {monster['emoji']}!"] + log_pertarungan
+
+        if player_hp_final > 0:
+            player_data['hp'] = player_hp_final
             gold = random.randint(*monster['hadiah_gold'])
             xp = random.randint(*monster['hadiah_xp'])
-            self.players[user_id_str]['hp'] = player_hp
-            self.players[user_id_str]['gold'] += gold
-            self.players[user_id_str]['xp'] += xp
-            log.append(f"\n**KEMENANGAN!** Sisa HP: **{player_hp}**. Anda mendapat **{gold} Gold** & **{xp} XP**.")
-
-            # 4a. Peluang Item Drop (contoh: 15% drop ramuan)
-            if random.random() < 0.15:
-                item_drop_id = 'ramuan'
-                inventory = self.players[user_id_str].get('inventory', {})
-                inventory[item_drop_id] = inventory.get(item_drop_id, 0) + 1
-                self.players[user_id_str]['inventory'] = inventory
-                log.append(f"✨ Anda menemukan **Ramuan Kesehatan** dari monster!")
-
-            # 4b. Cek Progres Quest
+            player_data['gold'] += gold
+            player_data['xp'] += xp
+            log.append(f"\n**KEMENANGAN!** Anda mendapat **{gold} Gold** & **{xp} XP**.")
+            
+            pesan_drop = self._cek_item_drop_logic(user_id_str, monster_id, 'regular_monsters')
+            if pesan_drop: log.append(pesan_drop)
+            
             pesan_quest = self._cek_quest_progress_logic(user_id_str, monster_id)
             if pesan_quest: log.append(pesan_quest)
-
-            # 4c. Cek Level Up
+            
             leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
             if leveled_up: log.append(pesan_level_up)
         else:
-            self.players[user_id_str]['hp'] = 0
-            gold_hilang = int(self.players[user_id_str]['gold'] * 0.10) # Kehilangan 10% gold
-            self.players[user_id_str]['gold'] -= gold_hilang
-            log.append(f"\n**KEKALAHAN!** Anda pingsan dan kehilangan **{gold_hilang} Gold**.")
-        
+            player_data['hp'] = 0
+            log.append("\n**KEKALAHAN!** HP Anda menjadi 0.")
+
+        player_data['hunt_cooldown_until'] = (datetime.now() + timedelta(minutes=1)).isoformat()
         self.save_player_data()
         return "\n".join(log)
 
-    def _cek_quest_progress_logic(self, user_id_str, monster_id):
-        """Memeriksa dan mengupdate progres quest setelah pertarungan."""
-        active_quest = self.players[user_id_str]['active_quest']
-        if active_quest['id'] is not None:
-            quest_info = self.QUESTS[active_quest['id']]
-            if quest_info['target_monster'] == monster_id:
-                active_quest['progress'] += 1
-                if active_quest['progress'] >= quest_info['jumlah_target']:
-                    hadiah_gold = quest_info['hadiah_gold']
-                    hadiah_xp = quest_info['hadiah_xp']
-                    self.players[user_id_str]['gold'] += hadiah_gold
-                    self.players[user_id_str]['xp'] += hadiah_xp
-                    self.players[user_id_str]['active_quest'] = {"id": None, "progress": 0}
-                    return f"\n**QUEST SELESAI: {quest_info['nama']}!**\nHadiah: **{hadiah_gold} Gold** & **{hadiah_xp} XP**."
-        return None # Tidak ada update quest
+    def _jelajah_logic(self, user_id):
+        user_id_str = str(user_id)
+        if user_id_str not in self.players: return "Anda belum membuat karakter!"
+        player_data = self.players[user_id_str]
 
-    def _cek_level_up_logic(self, user_id_str):
-        player_level = self.players[user_id_str]['level']
-        required_xp = self.calculate_xp_for_level(player_level)
-        if self.players[user_id_str]['xp'] >= required_xp:
-            self.players[user_id_str]['level'] += 1
-            self.players[user_id_str]['xp'] -= required_xp
-            self.players[user_id_str]['max_hp'] += 20
-            self.players[user_id_str]['hp'] = self.players[user_id_str]['max_hp']
-            return True, f"\n🎉 **SELAMAT!** Anda naik ke **Level {self.players[user_id_str]['level']}**!"
-        return False, ""
+        cooldown = datetime.fromisoformat(player_data.get("jelajah_cooldown_until", "2000-01-01T00:00:00"))
+        if datetime.now() < cooldown:
+            sisa_waktu = cooldown - datetime.now()
+            jam, sisa = divmod(int(sisa_waktu.total_seconds()), 3600)
+            menit, _ = divmod(sisa, 60)
+            return f"Anda baru saja berpetualang! Coba lagi dalam **{jam} jam {menit} menit**."
 
+        if player_data['hp'] <= 0: return "HP Anda terlalu rendah!"
+
+        dungeon_id = str(player_data['dungeon_progress']['unlocked'])
+        dungeon_key = f"dungeon_{dungeon_id}"
+        if dungeon_key not in self.ELITE_BOSSES: return "Tidak ada elite boss di dungeon ini."
+            
+        elite_boss_info = random.choice(self.ELITE_BOSSES[dungeon_key])
+        monster_id = elite_boss_info['id']
+        monster = self.MONSTERS['monster_data'][monster_id].copy()
+
+        player_hp_final, log_pertarungan = self._generic_fight_logic(player_data['hp'], self._get_player_total_stats(user_id_str), monster)
+        log = [f"Dalam petualangan Anda, **{monster['nama']}** {monster['emoji']} muncul!"] + log_pertarungan
+        
+        if player_hp_final > 0:
+            player_data['hp'] = player_hp_final
+            gold = random.randint(*monster['hadiah_gold'])
+            xp = random.randint(*monster['hadiah_xp'])
+            player_data['gold'] += gold
+            player_data['xp'] += xp
+            log.append(f"\n**KEMENANGAN!** Anda mengalahkan elite boss dan mendapat **{gold} Gold** serta **{xp} XP**.")
+            
+            pesan_drop = self._cek_item_drop_logic(user_id_str, monster_id, 'elite_bosses')
+            if pesan_drop: log.append(pesan_drop)
+
+            leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
+            if leveled_up: log.append(pesan_level_up)
+        else:
+            player_data['hp'] = 0
+            log.append("\n**KEKALAHAN!** Anda dikalahkan oleh elite boss.")
+
+        player_data['jelajah_cooldown_until'] = (datetime.now() + timedelta(hours=1)).isoformat()
+        self.save_player_data()
+        return "\n".join(log)
+
+    def _dungeon_logic(self, user_id):
+        user_id_str = str(user_id)
+        if user_id_str not in self.players: return "Anda belum membuat karakter!"
+        player_data = self.players[user_id_str]
+        dungeon_progress = player_data['dungeon_progress']
+
+        cooldown = datetime.fromisoformat(dungeon_progress['cooldown_until'])
+        if datetime.now() < cooldown:
+            sisa_waktu = cooldown - datetime.now()
+            jam, sisa = divmod(int(sisa_waktu.total_seconds()), 3600)
+            menit, _ = divmod(sisa, 60)
+            return f"Anda baru saja menyelesaikan dungeon! Coba lagi dalam **{jam} jam {menit} menit**."
+
+        if player_data['hp'] <= 0: return "HP Anda terlalu rendah!"
+
+        dungeon_id = str(dungeon_progress['unlocked'])
+        if dungeon_id not in self.DUNGEONS: return "Selamat! Anda telah menyelesaikan semua dungeon."
+            
+        dungeon_info = self.DUNGEONS[dungeon_id]
+        monster_id = dungeon_info['final_boss_id']
+        monster = self.MONSTERS['monster_data'][monster_id].copy()
+
+        player_hp_final, log_pertarungan = self._generic_fight_logic(player_data['hp'], self._get_player_total_stats(user_id_str), monster)
+        log = [f"Anda menantang Final Boss: **{monster['nama']}** {monster['emoji']}!"] + log_pertarungan
+
+        if player_hp_final > 0:
+            player_data['hp'] = player_hp_final
+            hadiah = dungeon_info['hadiah_boss']
+            player_data['gold'] += hadiah['gold']
+            player_data['xp'] += hadiah['xp']
+            log.append(f"\n**BOSS DIKALAHKAN!** Hadiah: **{hadiah['gold']} Gold** & **{hadiah['xp']} XP**.")
+            
+            pesan_drop = self._cek_item_drop_logic(user_id_str, monster_id, 'dungeon_bosses')
+            if pesan_drop: log.append(pesan_drop)
+            
+            dungeon_progress['unlocked'] += 1
+            
+            leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
+            if leveled_up: log.append(pesan_level_up)
+        else:
+            player_data['hp'] = 0
+            log.append("\n**KEKALAHAN!** Anda gagal mengalahkan final boss.")
+            
+        dungeon_progress['cooldown_until'] = (datetime.now() + timedelta(hours=6)).isoformat()
+        self.save_player_data()
+        return "\n".join(log)
+
+
+    def _heal_logic(self, user_id):
+        user_id_str = str(user_id)
+        inventory = self.players[user_id_str].get('inventory', {})
+        if 'ramuan' not in inventory or inventory['ramuan'] <= 0:
+            return "Anda tidak memiliki Ramuan Kesehatan! Beli di `/toko`."
+        item_info = self.SHOP_ITEMS.get('ramuan')
+        if not item_info: return "Terjadi kesalahan pada item ramuan."
+        if self.players[user_id_str]['hp'] == self.players[user_id_str]['max_hp']:
+            return "HP Anda sudah penuh."
+        self.players[user_id_str]['hp'] = self.players[user_id_str]['max_hp']
+        inventory['ramuan'] -= 1
+        if inventory['ramuan'] <= 0: del inventory['ramuan']
+        self.save_player_data()
+        return f"Anda menggunakan **{item_info['nama_tampilan']}** dan HP Anda pulih sepenuhnya!"
+    
+    def _cek_item_drop_logic(self, user_id_str, monster_id, monster_type):
+        loot_table = self.LOOT_TABLES.get(monster_type, {}).get(monster_id, {})
+        
+        if not loot_table:
+            return None # Tidak ada drop untuk monster ini
+
+        for item_id, chance in loot_table.items():
+            if random.random() < chance:
+                # Tambahkan item ke inventaris
+                inventory = self.players[user_id_str].get('inventory', {})
+                inventory[item_id] = inventory.get(item_id, 0) + 1
+                self.players[user_id_str]['inventory'] = inventory
+                
+                # --- BAGIAN YANG DIPERBAIKI ---
+                # 1. Ambil seluruh info item terlebih dahulu
+                item_info = self.SHOP_ITEMS.get(item_id, {})
+                # 2. Ambil emoji dan nama secara terpisah
+                item_emoji = item_info.get('emoji', '')
+                item_name = item_info.get('nama_tampilan', item_id)
+                # 3. Gabungkan dalam pesan
+                return f"✨ Anda mendapatkan: {item_emoji} **{item_name}**!"
+                # ---------------------------
+        
+        return None # Tidak ada item yang drop kali ini
+    
+    # --- LOGIKA EKONOMI & ITEM ---
+    
     def _toko_logic(self):
         if not self.SHOP_ITEMS: return "Maaf, toko sedang kosong."
-        embed = discord.Embed(title="🛒 Toko Item", description="Gunakan `rbeli <id_item> <jumlah>` untuk membeli.", color=discord.Color.green())
+        embed = discord.Embed(title="🛒 Toko Item", description="Gunakan `rbeli <id_item> [jumlah]` untuk membeli.", color=discord.Color.green())
         for item_id, item_info in self.SHOP_ITEMS.items():
             embed.add_field(name=f"{item_info.get('emoji', '')} {item_info.get('nama_tampilan', 'Item')} - {item_info.get('harga', 0)} Gold", value=f"`ID: {item_id}` | {item_info.get('deskripsi', '')}", inline=False)
         return embed
 
     def _inventaris_logic(self, user_id, user_name, user_avatar_url):
         user_id_str = str(user_id)
-        if user_id_str not in self.players or not self.players[user_id_str].get('inventory'): return "Inventaris Anda kosong."
-        embed = discord.Embed(title=f"🎒 Inventaris - {user_name}", color=discord.Color.orange())
-        embed.set_thumbnail(url=user_avatar_url)
-        for item_id, jumlah in self.players[user_id_str]['inventory'].items():
+        
+        # Buat embed dasar dengan gaya baru
+        embed = discord.Embed(
+            color=discord.Color.from_str("#2C2F33") # Warna abu-abu gelap
+        )
+        embed.set_author(name=f"{user_name} — inventory", icon_url=user_avatar_url)
+
+        if user_id_str not in self.players or not self.players[user_id_str].get('inventory'):
+            embed.description = "Inventaris Anda kosong."
+            return embed
+
+        inventory = self.players[user_id_str]['inventory']
+        
+        # 1. Kelompokkan item berdasarkan kategori
+        kategori_items = {}
+        for item_id, jumlah in inventory.items():
             item_info = self.SHOP_ITEMS.get(item_id)
-            if item_info: embed.add_field(name=f"{item_info.get('emoji', '')} {item_info.get('nama_tampilan', 'Item')}", value=f"Jumlah: **{jumlah}**", inline=True)
+            if item_info:
+                kategori = item_info.get('kategori', 'Lain-lain')
+                if kategori not in kategori_items:
+                    kategori_items[kategori] = []
+                
+                emoji = item_info.get('emoji', '')
+                nama = item_info.get('nama_tampilan', 'Item Tidak Dikenal')
+                kategori_items[kategori].append(f"{emoji} {nama}: **{jumlah}**")
+
+        # 2. Bagi kategori menjadi dua kolom
+        kolom1_text = ""
+        kolom2_text = ""
+        kategori_terurut = sorted(kategori_items.keys())
+        
+        for i, kategori in enumerate(kategori_terurut):
+            # Format teks untuk satu kategori penuh
+            kategori_text = f"\n**{kategori}**\n" + "\n".join(kategori_items[kategori]) + "\n"
+            
+            # Bagi ke kolom kiri dan kanan secara seimbang
+            if len(kolom1_text) <= len(kolom2_text):
+                kolom1_text += kategori_text
+            else:
+                kolom2_text += kategori_text
+
+        # 3. Tambahkan teks ke field embed
+        if kolom1_text:
+            embed.add_field(name="\u200b", value=kolom1_text, inline=True) # \u200b adalah spasi kosong
+        if kolom2_text:
+            embed.add_field(name="\u200b", value=kolom2_text, inline=True)
+        
         return embed
 
     def _beli_logic(self, user_id, item_id, jumlah):
@@ -280,9 +404,13 @@ class LogicHandler:
         if not item_info or not item_info.get('efek'): return "Item ini tidak bisa digunakan."
         efek, pesan_efek = item_info['efek'], ""
         if 'hp' in efek:
-            pemulihan = efek['hp']
-            self.players[user_id_str]['hp'] = min(self.players[user_id_str]['max_hp'], self.players[user_id_str]['hp'] + pemulihan)
-            pesan_efek = f"HP Anda pulih sebesar **{pemulihan}**!"
+            heal_amount = efek['hp']
+            if heal_amount == "full":
+                self.players[user_id_str]['hp'] = self.players[user_id_str]['max_hp']
+                pesan_efek = "HP Anda pulih sepenuhnya!"
+            elif isinstance(heal_amount, int):
+                self.players[user_id_str]['hp'] = min(self.players[user_id_str]['max_hp'], self.players[user_id_str]['hp'] + heal_amount)
+                pesan_efek = f"HP Anda pulih sebesar **{heal_amount}**!"
         inventory[item_id] -= 1
         if inventory[item_id] <= 0: del inventory[item_id]
         self.save_player_data()
@@ -303,7 +431,40 @@ class LogicHandler:
         self.players[user_id_str]['equipment'][item_type] = item_id
         self.save_player_data()
         return f"Anda berhasil memakai **{item_info['nama_tampilan']}**."
-        
+
+    # --- LOGIKA QUEST ---
+    
+    def _quests_list_logic(self):
+        embed = discord.Embed(title="📜 Daftar Quest Tersedia", color=discord.Color.dark_teal())
+        if not self.QUESTS:
+            embed.description = "Tidak ada quest yang tersedia saat ini."
+            return embed
+        for quest_id, info in self.QUESTS.items():
+            embed.add_field(name=f"{info['nama']} (`ID: {quest_id}`)", value=f"{info['deskripsi']}\n**Hadiah:** {info['hadiah_gold']} Gold, {info['hadiah_xp']} XP", inline=False)
+        return embed
+
+    def _quest_ambil_logic(self, user_id, quest_id):
+        user_id_str, quest_id = str(user_id), quest_id.lower()
+        if self.players[user_id_str]['active_quest']['id'] is not None:
+            return "Anda sudah memiliki quest aktif! Selesaikan dulu."
+        if quest_id not in self.QUESTS: return "Quest tidak ditemukan."
+        self.players[user_id_str]['active_quest'] = {"id": quest_id, "progress": 0}
+        self.save_player_data()
+        return f"Anda telah mengambil quest: **{self.QUESTS[quest_id]['nama']}**."
+
+    def _quest_info_logic(self, user_id):
+        user_id_str = str(user_id)
+        active_quest = self.players[user_id_str]['active_quest']
+        if active_quest['id'] is None: return "Anda tidak memiliki quest aktif."
+        quest_info = self.QUESTS[active_quest['id']]
+        progress = active_quest['progress']
+        target = quest_info['jumlah_target']
+        embed = discord.Embed(title=f"Info Quest: {quest_info['nama']}", description=quest_info['deskripsi'], color=discord.Color.blue())
+        embed.add_field(name="Progres", value=f"**{progress} / {target}**")
+        return embed
+    
+    # --- LOGIKA SOSIAL & UTILITAS ---
+    
     def _harian_logic(self, user_id):
         user_id_str = str(user_id)
         last_claim_str = self.players[user_id_str].get("last_daily", "2000-01-01 00:00:00.000000")
@@ -318,191 +479,20 @@ class LogicHandler:
             waktu_tunggu = (last_claim_time + timedelta(hours=22)) - datetime.now()
             jam, menit = divmod(waktu_tunggu.seconds // 60, 60)
             return f"Coba lagi dalam **{jam} jam {menit} menit**."
-        
-    def _heal_logic(self, user_id):
-        user_id_str = str(user_id)
-        inventory = self.players[user_id_str].get('inventory', {})
-        
-        # Cari item ramuan di inventaris
-        # Kita asumsikan ID itemnya adalah "ramuan"
-        if 'ramuan' not in inventory or inventory['ramuan'] <= 0:
-            return "Anda tidak memiliki Ramuan Kesehatan! Beli di `/toko`."
-
-        # Ambil info item dari toko
-        item_info = self.SHOP_ITEMS.get('ramuan')
-        if not item_info:
-            return "Terjadi kesalahan pada item ramuan."
-
-        # Cek jika HP sudah penuh
-        if self.players[user_id_str]['hp'] == self.players[user_id_str]['max_hp']:
-            return "HP Anda sudah penuh."
-
-        # Proses healing
-        self.players[user_id_str]['hp'] = self.players[user_id_str]['max_hp']
-        
-        # Kurangi ramuan dari inventaris
-        inventory['ramuan'] -= 1
-        if inventory['ramuan'] <= 0:
-            del inventory['ramuan']
-
-        self.save_player_data()
-        return f"Anda menggunakan **{item_info['nama_tampilan']}** dan HP Anda pulih sepenuhnya!"
 
     async def _leaderboard_logic(self, bot):
-        if not self.players:
-            return "Papan peringkat masih kosong karena belum ada pemain."
-
-        # Mengurutkan pemain berdasarkan Level (tertinggi), lalu XP (tertinggi)
-        sorted_players = sorted(
-            self.players.items(),
-            key=lambda item: (item[1].get('level', 0), item[1].get('xp', 0)),
-            reverse=True
-        )
-
-        # Buat embed dasar
-        embed = discord.Embed(
-            title="🏆 Papan Peringkat Teratas",
-            description="Berikut adalah 10 pemain dengan level tertinggi di server.",
-            color=discord.Color.purple()
-        )
-
-        # Buat daftar peringkat
+        if not self.players: return "Papan peringkat masih kosong."
+        sorted_players = sorted(self.players.items(), key=lambda item: (item[1].get('level', 0), item[1].get('xp', 0)), reverse=True)
+        embed = discord.Embed(title="🏆 Papan Peringkat Teratas", description="10 pemain dengan level tertinggi.", color=discord.Color.purple())
         leaderboard_text = ""
         for i, (user_id, data) in enumerate(sorted_players[:10]):
             try:
-                # Ambil nama pengguna dari ID-nya
                 user = await bot.fetch_user(int(user_id))
                 user_name = user.display_name
             except discord.NotFound:
                 user_name = "Pemain Tidak Dikenal"
-            
-            # Beri emoji untuk 3 besar
             rank_emoji = ["🥇", "🥈", "🥉"]
-            if i < 3:
-                rank = rank_emoji[i]
-            else:
-                rank = f"**#{i + 1}**"
-
+            rank = rank_emoji[i] if i < 3 else f"**#{i + 1}**"
             leaderboard_text += f"{rank} **{user_name}** - Level {data.get('level', 0)} ({data.get('xp', 0)} XP)\n"
-
-        if not leaderboard_text:
-            leaderboard_text = "Belum ada pemain yang bisa ditampilkan."
-
-        embed.description = leaderboard_text
+        embed.description = leaderboard_text if leaderboard_text else "Belum ada pemain yang bisa ditampilkan."
         return embed
-
-    def _quests_list_logic(self):
-        embed = discord.Embed(title="📜 Daftar Quest Tersedia", color=discord.Color.dark_teal())
-        if not self.QUESTS:
-            embed.description = "Tidak ada quest yang tersedia saat ini."
-            return embed
-        
-        for quest_id, info in self.QUESTS.items():
-            embed.add_field(
-                name=f"{info['nama']} (`ID: {quest_id}`)",
-                value=f"{info['deskripsi']}\n**Hadiah:** {info['hadiah_gold']} Gold, {info['hadiah_xp']} XP",
-                inline=False
-            )
-        return embed
-
-    def _quest_ambil_logic(self, user_id, quest_id):
-        user_id_str = str(user_id)
-        quest_id = quest_id.lower()
-
-        if self.players[user_id_str]['active_quest']['id'] is not None:
-            return "Anda sudah memiliki quest aktif! Selesaikan dulu."
-        
-        if quest_id not in self.QUESTS:
-            return "Quest tidak ditemukan."
-            
-        self.players[user_id_str]['active_quest'] = {
-            "id": quest_id,
-            "progress": 0
-        }
-        self.save_player_data()
-        return f"Anda telah mengambil quest: **{self.QUESTS[quest_id]['nama']}**."
-
-    def _quest_info_logic(self, user_id):
-        user_id_str = str(user_id)
-        active_quest = self.players[user_id_str]['active_quest']
-
-        if active_quest['id'] is None:
-            return "Anda tidak memiliki quest aktif. Ambil satu dari `/quests`."
-            
-        quest_info = self.QUESTS[active_quest['id']]
-        progress = active_quest['progress']
-        target = quest_info['jumlah_target']
-
-        embed = discord.Embed(
-            title=f"Info Quest: {quest_info['nama']}",
-            description=quest_info['deskripsi'],
-            color=discord.Color.blue()
-        )
-        embed.add_field(name="Progres", value=f"**{progress} / {target}**")
-        return embed
-    
-    def _zona_list_logic(self):
-        embed = discord.Embed(title="🌍 Daftar Zona Hunting", color=discord.Color.dark_green())
-        for zona_id, info in self.MONSTERS.get('zona', {}).items():
-            embed.add_field(
-            name=f"{info['nama_tampilan']} (`ID: {zona_id}`)",
-            value=f"Rekomendasi Level: {info['level_rekomendasi']}",
-            inline=False
-            )
-        return embed
-    
-    def _dungeon_logic(self, user_id):
-            user_id_str = str(user_id)
-            player_data = self.players[user_id_str]
-            dungeon_progress = player_data['dungeon_progress']
-            
-            # 1. Cek Cooldown
-            cooldown_until = datetime.fromisoformat(dungeon_progress['cooldown_until'])
-            if datetime.now() < cooldown_until:
-                sisa_waktu = cooldown_until - datetime.now()
-                menit, detik = divmod(int(sisa_waktu.total_seconds()), 60)
-                return f"Anda sedang dalam masa cooldown! Coba lagi dalam **{menit} menit {detik} detik**."
-
-            # 2. Tentukan Dungeon yang akan dihadapi
-            dungeon_id = str(dungeon_progress['unlocked'])
-            if dungeon_id not in self.DUNGEONS:
-                return "Selamat! Anda telah menyelesaikan semua dungeon yang tersedia."
-
-            dungeon_info = self.DUNGEONS[dungeon_id]
-            monster = self.MONSTERS['monster_data'][dungeon_info['monster_id']].copy()
-
-            # 3. Persiapan Pertarungan
-            player_stats = self._get_player_total_stats(user_id_str)
-            player_hp = player_data['hp']
-            log = [f"Anda memasuki **{dungeon_info['nama']}** {dungeon_info['emoji']} dan menghadapi **{monster['nama']}**!"]
-
-            # 4. Simulasi & Hasil (Mirip hunting tapi lebih sulit)
-            damage_ke_monster = max(1, player_stats['attack'] - monster['defense'])
-            damage_ke_pemain = max(1, monster['attack'] - player_stats['defense'])
-            
-            ronde_pemain_menang = monster['hp'] / damage_ke_monster
-            ronde_monster_menang = player_hp / damage_ke_pemain
-
-            if ronde_pemain_menang <= ronde_monster_menang:
-                # Pemain Menang
-                hadiah_gold = dungeon_info['hadiah_gold']
-                hadiah_xp = dungeon_info['hadiah_xp']
-                player_data['gold'] += hadiah_gold
-                player_data['xp'] += hadiah_xp
-                log.append(f"\n**KEMENANGAN!**\nAnda berhasil menyelesaikan dungeon dan mendapatkan **{hadiah_gold} Gold** serta **{hadiah_xp} XP**.")
-
-                # Buka dungeon selanjutnya
-                dungeon_progress['unlocked'] += 1
-                # Set cooldown baru
-                cooldown_baru = datetime.now() + timedelta(minutes=dungeon_info['cooldown_menit'])
-                dungeon_progress['cooldown_until'] = cooldown_baru.isoformat()
-                
-                leveled_up, pesan_level_up = self._cek_level_up_logic(user_id_str)
-                if leveled_up: log.append(pesan_level_up)
-            else:
-                # Pemain Kalah
-                player_data['hp'] = 0
-                log.append("\n**KEKALAHAN!** Anda gagal menyelesaikan dungeon. HP Anda menjadi 0.")
-
-            self.save_player_data()
-            return "\n".join(log)

@@ -1,21 +1,16 @@
 import discord
 from discord.ext import commands
 import os
-import json
-import random
-from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import asyncio
-
 from logic import LogicHandler
+from discord.ext import tasks
+import itertools
 
 # --- KONFIGURASI & SETUP AWAL ---
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD_ID = os.getenv("GUILD_ID")
-
-DB_FILE = "database.json"
-
 
 # --- SETUP BOT DENGAN KELAS KUSTOM ---
 class RimuruBot(commands.Bot):
@@ -25,8 +20,7 @@ class RimuruBot(commands.Bot):
         self.logic_handler = LogicHandler()
 
     async def setup_hook(self):
-        """Ini adalah tempat untuk semua setup asinkron."""
-        # 1. Memuat semua Cogs
+        """Memuat Cogs dan sinkronisasi slash commands."""
         print("Memuat Cogs...")
         for filename in os.listdir('./cogs'):
             if filename.endswith('.py'):
@@ -36,7 +30,6 @@ class RimuruBot(commands.Bot):
                 except Exception as e:
                     print(f"- Gagal memuat cog '{filename[:-3]}': {e}")
         
-        # 2. Sinkronisasi slash commands
         print("\nSinkronisasi slash commands...")
         try:
             if self.GUILD_ID:
@@ -52,13 +45,30 @@ class RimuruBot(commands.Bot):
 intents = discord.Intents.default()
 intents.message_content = True
 bot = RimuruBot(command_prefix=['r!', 'rmr '], case_insensitive=True, intents=intents, help_command=None)
-bot.activity = discord.Activity(type=discord.ActivityType.watching, name="Rimuru | r!help")
 
+# --- BAGIAN STATUS BERGANTI-GANTI YANG DIPERBAIKI ---
+
+# 1. Definisikan cycle di sini, di luar fungsi, agar bisa diakses secara global
+status_cycle = itertools.cycle([
+    "/help | Menunggu perintah",
+    "Di Dunia Kardia",
+    "Melayani Lord Jikael"
+])
+
+# 2. Definisikan fungsi task loop
+@tasks.loop(seconds=15)
+async def change_status():
+    await bot.change_presence(activity=discord.Game(name=next(status_cycle)))
+
+# 3. HANYA SATU @bot.event on_ready
 @bot.event
 async def on_ready():
     print("====================================")
-    print(f"Bot {bot.user} (prefix: '{bot.command_prefix}') telah online!")
+    print(f"Bot {bot.user} (prefix: {bot.command_prefix[0]}) telah online!")
     print("====================================")
+    # Memastikan bot siap sebelum memulai task
+    await bot.wait_until_ready()
+    change_status.start()
 
 # --- MENJALANKAN BOT ---
 if __name__ == "__main__":
