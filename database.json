@@ -1,30 +1,29 @@
 {
-    "439832583271088130": {
-        "level": 1,
-        "xp": 41,
-        "gold": 6,
-        "hp": 0,
-        "max_hp": 100,
-        "attack": 10,
-        "defense": 5,
-        "equipment": {
-            "senjata": "pedang_pemula",
-            "armor": null
-        },
-        "inventory": {
-            "slime_gel": 1,
-            "wolf_fang": 1
-        },
-        "dungeon_progress": {
-            "unlocked": 1,
-            "cooldown_until": "2025-08-03T20:59:54.182037"
-        },
-        "hunt_cooldown_until": "2025-08-03T15:00:30.480176",
-        "jelajah_cooldown_until": "2025-08-03T15:59:33.586304",
-        "active_quest": {
-            "id": null,
-            "progress": 0
-        },
-        "last_daily": "2000-01-01T00:00:00.000000"
-    }
+  "439832583271088130": {
+    "level": 1,
+    "xp": 0,
+    "gold": 9999999999,
+    "hp": 100,
+    "max_hp": 100,
+    "attack": 10,
+    "defense": 5,
+    "equipment": {
+      "senjata": "jikaels_sword",
+      "armor": "jikaels_armor"
+    },
+    "inventory": {},
+    "dungeon_progress": {
+      "current_dungeon": 1,
+      "monsters_defeated": 0,
+      "boss_unlocked": false,
+      "cooldown_until": "2000-01-01T00:00:00"
+    },
+    "hunt_cooldown_until": "2000-01-01T00:00:00",
+    "jelajah_cooldown_until": "2000-01-01T00:00:00",
+    "active_quest": {
+      "id": null,
+      "progress": 0
+    },
+    "last_daily": "2000-01-01T00:00:00.000000"
+  }
 }
