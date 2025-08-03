@@ -1,0 +1,29 @@
+{
+    "439832583271088130": {
+        "level": 1,
+        "xp": 21,
+        "gold": 65,
+        "hp": 85,
+        "max_hp": 100,
+        "attack": 10,
+        "defense": 5,
+        "equipment": {
+            "senjata": "pedang_pemula",
+            "armor": null
+        },
+        "inventory": {
+            "wolf_fang": 1
+        },
+        "dungeon_progress": {
+            "unlocked": 1,
+            "cooldown_until": "2000-01-01T00:00:00"
+        },
+        "hunt_cooldown_until": "2025-08-03T18:02:09.348600",
+        "jelajah_cooldown_until": "2000-01-01T00:00:00",
+        "active_quest": {
+            "id": null,
+            "progress": 0
+        },
+        "last_daily": "2000-01-01T00:00:00.000000"
+    }
+}
