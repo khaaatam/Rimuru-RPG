@@ -1,10 +1,10 @@
 {
     "439832583271088130": {
-        "level": 3,
-        "xp": 506,
-        "gold": 10000000547,
-        "hp": 140,
-        "max_hp": 140,
+        "level": 4,
+        "xp": 230,
+        "gold": 10000000566,
+        "hp": 160,
+        "max_hp": 160,
         "attack": 10,
         "defense": 5,
         "equipment": {
@@ -20,7 +20,7 @@
             "unlocked": 2,
             "cooldown_until": "2025-08-03T23:25:57.230165"
         },
-        "hunt_cooldown_until": "2025-08-03T17:26:41.076869",
+        "hunt_cooldown_until": "2025-08-03T17:40:22.245362",
         "jelajah_cooldown_until": "2025-08-03T18:25:51.296389",
         "active_quest": {
             "id": null,
